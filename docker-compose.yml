@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: gestion_tecnicos
+    volumes:
+      - ./data:/app/data  # Montar volumen para persistencia de datos
+      - ./resources:/app/resources  # Montar recursos
+      # Para desarrollo, puedes montar el código fuente también:
+      # - .:/app
+    environment:
+      - DISPLAY=${DISPLAY}
+      - DB_PATH=/app/data/technicians.db
+    # Configuración para Linux/macOS
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Configuración para Windows
+    # network_mode: "host"  # Descomentar en Windows
+    # environment:
+    #   - DISPLAY=host.docker.internal:0.0
+    #   - DB_PATH=/app/data/technicians.db
+    tty: true
+    stdin_open: true
+    # Para Windows, podrías necesitar añadir:
+    # network: host
+    # ipc: host
