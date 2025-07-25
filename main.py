@@ -395,16 +395,11 @@ class MainWindow(QMainWindow):
             """)
     
 def main():
-    # Configurar el escalado para pantallas de alta resolución (High DPI)
-    if hasattr(Qt, 'AA_EnableHighDpiScaling'):
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-    if hasattr(Qt, 'AA_UseHighDpiPixmaps'):
-        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-    if hasattr(Qt, 'HighDpiScaleFactorRoundingPolicy'):
+    # Configurar la política de redondeo de DPI antes de crear QApplication
+    if hasattr(QApplication, 'setHighDpiScaleFactorRoundingPolicy'):
         QApplication.setHighDpiScaleFactorRoundingPolicy(
             Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
         )
-    
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
