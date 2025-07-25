@@ -3,8 +3,20 @@ import os
 import pandas as pd
 from datetime import datetime, timedelta
 
+import sys
+
+def get_app_dir():
+    if getattr(sys, 'frozen', False):
+        # Ejecutable empaquetado con PyInstaller
+        return os.path.dirname(sys.executable)
+    else:
+        # Ejecución normal (fuente)
+        return os.path.dirname(os.path.abspath(__file__))
+
 class Database:
-    def __init__(self, db_name='technicians.db'):
+    def __init__(self, db_name=None):
+        if db_name is None:
+            db_name = os.path.join(get_app_dir(), 'technicians.db')
         self.db_name = db_name
         self.conn = None
         self.cursor = None
